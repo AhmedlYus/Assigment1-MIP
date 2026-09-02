@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /* You are allowed to 1. add modifiers to fields and method signatures of subclasses, and 2. add code at the marked places, including removing the following return */
 public class Main {
@@ -28,6 +29,35 @@ public class Main {
         ExecutorService inputExc = Executors.newCachedThreadPool();
         File file = new File("words.txt");
         /* TODO: Read the file and for each line add the string to the inputQueue. Each line contains a single string */
+
+
+        // 1. read the file
+        try (Scanner MyScanner = new Scanner(file) ) {
+
+            // 2. as long as there is lines, read the nextline.
+            while (MyScanner.hasNextLine()) {
+
+                String line = MyScanner.nextLine();
+
+                System.out.println("SCANNER READ: [" + line + "]");
+
+                // 3. add the line to the thread
+                inputExc.submit(() -> {
+                    // 4. Add the word / line to the stack.
+                    inputStack.push(line);
+                    System.out.println("EXECUTOR: [" + line + "]");
+                });
+
+            }
+            // close the thread
+            inputExc.shutdown();
+            inputExc.awaitTermination(5, TimeUnit.SECONDS);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         Mapper<String, Boolean> mapper1 = new Mapper<String, Boolean>(layer) {
             @Override
@@ -84,6 +114,13 @@ public class Main {
             @Override
             protected void merge(String input) {
                 /* put the number of occurrences of the string in the map */
+                /**
+                 * each merger is assigned one stack (either odd or even) and
+                 * computes the count of all elements into a hash map. The merger for the even
+                 * stack computes the counts of all even words, and the merger for the odd stack
+                 * computes the counts of all odd words.
+                 */
+
 
             }
         };
