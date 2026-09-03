@@ -106,6 +106,22 @@ public class Main {
         *        have been processed
         *        the mapper must add its string to the correct queue*/
 
+        // Starts two mappers, each running until no more items comes off the input stack
+        distribute.submit(() -> {
+            while (true) {
+                String stringToDistribute = inputStack.pop();
+                if (stringToDistribute == null) break;
+                mapper1.transform(stringToDistribute);
+            }
+        });
+        distribute.submit(() -> {
+            while (true) {
+                String stringToDistribute = inputStack.pop();
+                if (stringToDistribute == null) break;
+                mapper2.transform(stringToDistribute);
+            }
+        });
+
         Merger<String> merger1 = new Merger<String>() {
             @Override
             protected void merge(String input) {
@@ -132,6 +148,25 @@ public class Main {
         ExecutorService merge = Executors.newCachedThreadPool();
         /* TODO: start n threads, each taking one string from either stack and giving it to a merger.
         *        Merger 1 will only add even strings, merger 2 will only add odd strings */
+
+
+        // Merger 1, even strings
+        merge.submit(() -> {
+            while (true) {
+                String stringToMerge = evenStack.pop();
+                if (stringToMerge == null) break;
+                merger1.merge(stringToMerge);
+            }
+        });
+
+        // Merger 2, odd strings
+        merge.submit(() -> {
+            while (true) {
+                String stringToMerge = oddStack.pop();
+                if (stringToMerge == null) break;
+                merger2.merge(stringToMerge);
+            }
+        });
 
         // Close the executors
         inputExc.shutdown();
