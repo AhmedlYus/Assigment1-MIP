@@ -59,45 +59,41 @@ public class Main {
         }
 
 
+        // Takes the String and puts in to the correct stack for odd and even length strings.
         Mapper<String, Boolean> mapper1 = new Mapper<String, Boolean>(layer) {
             @Override
             void transform(String input) {
-                /* TODO: take string and put it into the right stack */
 
                 // 1. count the length.
-                // 2. check length % / modolus 2
-                // 3. if reminder = 0, its even, if not its odd.
+                // 2. check length % / modulus 2
+                // 3. if reminder = 0, its even, if not it's odd.
                 // 4. add the input string to right stack.
 
                 int len = input.length();
                 if(len % 2 == 0) {
-                    // add to even
                     evenStack.push(input);
 
                 } else {
-                    // push to odd stack
                     oddStack.push(input);
                 }
-
-
             }
         };
+
+        // Takes the String and puts in to the correct stack for odd and even length strings.
         Mapper<String, Boolean> mapper2 = new Mapper<String, Boolean>(layer) {
             @Override
             void transform(String input) {
-                /* TODO: take string and put it into the right stack */
+
                 // 1. count the length.
-                // 2. check length % / modolus 2
-                // 3. if reminder = 0, its even, if not its odd.
+                // 2. check length % / modulus 2
+                // 3. if reminder = 0, its even, if not it's odd.
                 // 4. add the input string to right stack.
 
                 int len = input.length();
                 if(len % 2 == 0) {
-                    // add to even
                     evenStack.push(input);
 
                 } else {
-                    // push to odd stack
                     oddStack.push(input);
                 }
             }
