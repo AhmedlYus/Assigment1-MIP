@@ -4,20 +4,18 @@ package no.uio.ifi.task;
 public class LinkedStack<T> {
     private Node<T> top;
 
+    // Return the posision of the value in the stack.
     public int find(T t){
         /* implement me */
 
-        // 1. check if the list is empty
-        // 2. find the current element at the top.
-        // 3. Compare if the curr element is the one we want
-        // 4. If not go to the next until we find the element.
-
         Node<T> curr = top;
+        int posision = 0;
 
-        while(top != null){
+        while(curr != null){
             if(curr.content.equals(t)){
-                return 1;
+                return posision;
             }
+            posision++;
             curr = curr.next;
         }
 
