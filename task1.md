@@ -1,26 +1,27 @@
 
 # Task 1: identify $\mathcal{V}$ and $\mathcal{W}$
 
-## find()
+### find()
 
-$\mathcal{V}$(i: = top) = $\mathcal{V}$(top) ∪ {x} = {top, x}
+$\mathcal{V}$ = {top, i.val, i.next}
 
-$\mathcal{V}$(while ( i  ̸= null and i.val  ̸= d) { i := i.next ; }) = $\mathcal{V}$(i  ̸= null; i.val  ̸= d) ∪ $\mathcal{V}$(i := i.next ) = {i, i.val, i.next, d}
+$\mathcal{W}$ = ∅
 
 
 
-$\mathcal{W}$
+### push()
 
-## push()
+$\mathcal{V}$ = {top}
 
-$\mathcal{V}$
+$\mathcal{W}$ = {top, (new.next)}
 
-$\mathcal{W}$
+Unsure about new.top, its technically in shared memory but is unreachable before it becomes top.next
 
-## pop()
+### pop()
 
-$\mathcal{V}$
+$\mathcal{V}$ = {top, top.next, oldTop.val}
 
-$\mathcal{W}$
+oldTop.val can also be considered top.val
 
-## shared
+$\mathcal{W}$ = {top}
+
