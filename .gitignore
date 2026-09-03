@@ -1,0 +1,6 @@
+### IntelliJ IDEA ###
+*.iml
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+git_toolbox_prj.xml
