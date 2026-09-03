@@ -59,6 +59,7 @@ public class Main {
         }
 
 
+
         // Takes the String and puts in to the correct stack for odd and even length strings.
         Mapper<String, Boolean> mapper1 = new Mapper<String, Boolean>(layer) {
             @Override
@@ -122,6 +123,8 @@ public class Main {
             }
         });
 
+        Object totalMapMonitor = new Object();
+
         Merger<String> merger1 = new Merger<String>() {
             @Override
             protected void merge(String input) {
@@ -132,7 +135,10 @@ public class Main {
                  * stack computes the counts of all even words, and the merger for the odd stack
                  * computes the counts of all odd words.
                  */
-
+                synchronized (totalMapMonitor) {
+                    int current = total.getOrDefault(input, 0);
+                    total.put(input, current + 1 );
+                }
 
             }
         };
@@ -141,6 +147,11 @@ public class Main {
             @Override
             protected void merge(String input) {
                 /* put the number of occurrences of the string in the map */
+
+                synchronized (totalMapMonitor) {
+                    int current = total.getOrDefault(input, 0);
+                    total.put(input, current + 1 );
+                }
             }
         };
 
